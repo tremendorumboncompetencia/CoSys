@@ -5,13 +5,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="manifest" href="/CoSys/manifest.json">
-  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="/CoSys/images/favicon.ico">
  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
 
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/CoSys/sw.js');
-    };
+      navigator.serviceWorker.register('/CoSys/sw.js')
+        .then(() => console.log('Service Worker registrado'))
+        .catch(err => console.error('Error al registrar SW:', err));
+    }
   </script>
   <title>Competition Software</title>
   <style>
