@@ -1,20 +1,33 @@
-// On install - caching the application shell
-self.addEventListener('install', function(event) {
+// sw.js - Service Worker para GitHub Pages en /CoSys/
+
+const CACHE_NAME = 'cosys-cache-v1';
+const APP_SHELL = [
+  '/CoSys/',
+  '/CoSys/index.html',
+  '/CoSys/manifest.json',
+  '/CoSys/styles.css',         // Añade si tienes
+  '/CoSys/app.js',             // Añade si tienes
+  '/CoSys/images/djp192.png',
+  '/CoSys/images/djp512.png',
+  '/CoSys/images/noperfil.png'
+  // Agrega más recursos estáticos si usas otros (como fuentes locales o más imágenes)
+];
+
+self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open('sw-cache').then(function(cache) {
-      // cache any static files that make up the application shell
-      return cache.add('/CoSys/index.html');
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(APP_SHELL);
     })
   );
 });
 
-// On network request
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', event => {
   event.respondWith(
-    // Try the cache
-    caches.match(event.request).then(function(response) {
-      //If response found return it, else fetch again
-      return response || fetch(event.request);
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request).catch(() => {
+        // Si no hay red y falla, regresa la app shell
+        return caches.match('/CoSys/index.html');
+      });
     })
   );
 });
