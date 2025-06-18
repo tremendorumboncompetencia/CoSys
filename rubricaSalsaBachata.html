@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="MobileOptimized" content="width" />
+
+	<title>Puntuaciones</title>
+	<style type="text/css">*,*:after,*:before{
+                margin:0;
+                padding:0;
+                -webkit-box-sizing: border-box; 
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+            html{
+            zoom: 1.0;
+          }
+
+            #contenedor_carga{
+                background-color: rgba(250, 240, 245, 0);
+                height:100%;
+                width: 100%;
+                position: fixed;
+                -webkit-transition: all 1s ease;
+                -o-transition: all 1s ease;
+                transition: all 1s ease;
+                z-index:10000;
+                visibility:hidden;
+                opacity: '0';
+            }
+
+            .contenedor {
+                position: absolute;
+                top:50px;
+                left: 10px;
+                border-radius: 15px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+                padding: 30px;
+                max-width: 800px;
+                width: 445px;
+                height:480px;
+                text-align: center;
+            }
+
+            #carga{
+                border:15px solid #ccc;
+                border-top-color:#F4266A ;
+                border-top-style:groove ;
+                height: 100px;
+                width: 100px;
+                border-radius: 100%;
+                position: absolute;
+                top:200px;
+                left:400px;
+                
+                margin:auto;
+                -webkit-animation: girar 1.5s linear infinite;
+                -o-animation: girar 1.5s linear infinite;
+                animation:girar 1.5s linear infinite;
+            }
+            @keyframes girar{
+                from{transform: rotate(0deg);}
+                to{transform: rotate(360deg);}
+            }
+
+          
+            #scroll-bg{
+                background: rgb(15,15,204);
+                width:100%;
+                margin:10% auto;
+                padding:30px;
+                border-radius:50px;
+            }
+
+            #scroll-div{
+                float:left;
+                width:30px;
+                background:rgb(17,17,105);
+                height:320px;
+                overflow:hidden;
+                overflow-y:scroll;
+            }
+            #scroll-object{
+                color:rgb(17,17,105);
+                font-family:cursive;
+                font-size:15px;
+                padding:20px;
+                
+            }
+            #grafica{
+                float:left;
+            }
+
+            #num1,#num2,#num3,#num4,#num5,#num6,
+            #num7,#num8,#num9,#num10{
+                display: inline-block;
+                width:350px;
+                position: absolute;
+                left: 550px;
+                box-shadow: 0 4px 8px rgba(93, 50, 50, 0.3);
+            }
+
+            /* Cambia el tamaño del thumb al pasar sobre él */
+            input[type="range"]::-webkit-slider-thumb:hover {
+                transform: scale(1.3);
+                background-color: #3e8e41;
+                
+            }
+
+      
+
+            
+       
+            #image1{
+                height:100px;
+                width: 100px;
+                position: absolute;
+                left:22px;
+                top:40px;
+                opacity: 0.4;
+            }
+            #image2{
+                
+                position: absolute;
+                left:20px;
+                top:40px;
+                opacity: 0.1;
+            }
+
+            #campo{
+
+                font-family: sans-serif;
+                font-size: 20px;
+                color:rgb(249, 248, 247);
+                font-weight: bold;
+                position:absolute;
+                top:10px;
+                left:10px;
+            }
+
+            #campo1{
+                font-family: sans-serif;
+                font-size: 20px;
+                color:rgb(181, 9, 9);
+                font-weight: bold;
+                position:absolute;
+                top:10px;
+                left:90px;
+            }
+            #competenciaN{
+                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                color:aliceblue;
+            }
+            #cuerpo{
+                background: linear-gradient(
+                to bottom, 
+                #141414,    /* Color oscuro superior (negro o gris oscuro) */
+                #292931,    /* Color intermedio (gris oscuro tirando a púrpura) */
+                #6a003a    /* Color inferior (rojo oscuro/púrpura oscuro) */
+                );
+                height: 110vh;
+                margin: 0; 
+            }
+
+            #txt2,#txt3,#txt4,#txt5,
+            #txt6,#txt7,#txt8,#txt9,
+            #txt10,#txt11{
+                position: absolute;
+                color:aliceblue;  
+                text-shadow: 2px 2px#110000;
+                font-size: 15px;
+                left:580px;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                 
+            }
+            #txt1{
+                position: absolute;
+                color:aliceblue;  
+                text-shadow: 2px 2px#110000;
+                font-size: 18px;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                left:20px;
+                top: 75px;
+            }
+            #txt2{
+                top: 55px;   /*incremento 55*/
+                
+            }
+            #txt3,#txt4,#txt5,#txt6,#txt7,
+            #txt8,#txt9,#txt10,#txt11{
+                position: relative;
+                top: -20px;
+            }
+           
+
+
+            #variableDisplay1,#variableDisplay2{
+                position: absolute;
+                color:aliceblue;  
+                text-shadow: 2px 2px#110000;
+                font-size: 18px;
+                left:20px;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            #variableDisplay1{
+                top:130px;
+            }
+            #variableDisplay2{
+                top:160px;
+            }
+            
+
+
+
+            #lugaresDisplay{
+                position: absolute;
+                color:rgb(161, 163, 163);  
+                text-shadow: 2px 2px#110000;
+                font-size: 16px;
+                left:20px;top:150px;
+                font-family:Verdana, Geneva, Tahoma, sans-serif;
+                top:210px;
+
+            }
+
+            #calificacionDisplay{
+                position: absolute;
+                color:aliceblue;  
+                text-shadow: 2px 2px#110000;
+                font-size: 45px;
+                left:185px; top:350px;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            }
+            
+            #nJuez{
+                position: absolute;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                font-style: italic;
+                font-size: 20px;
+                /*background:linear-gradient(to bottom right, rgb(96, 97, 97),#f3f4f1);*/
+                color:rgb(2, 28, 66);
+                border-style: double;
+                left:140px;
+                top: 75px;
+                border-radius: 50px;
+                text-align: center;
+                line-height: 20px;
+            }
+           #barra1,#barra5,#barra2,
+           #barra3,#barra4,#barra6,
+           #originalidad,#proyeccion,#presentacion,#controlSincCo{
+            position:absolute;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            color:#f5f1f1;
+            text-shadow: 2px 2px#110000;
+            font-size: 22px;
+            left: 470px;
+           }
+           #barra1{ top:69px;}
+           #barra2{ top: calc(69px *2.1);}
+           #barra3{ top: calc(69px *3.23);}
+           
+
+           #boton:active {
+            transform: scale(0.98);
+            
+            box-shadow: 3px 2px 50px 1px rgba(0, 0, 0, 0.5);
+            
+            background-color: yellow;
+            
+          }
+
+
+
+        #boton {
+        position: absolute;
+        left:120px;
+        top:420px;
+        height:90px;
+        width:250px;
+        background: linear-gradient(90deg, #ff5f5f, #ff9966); /* Degradado de rojo a naranja */
+        color: white;                /* Texto en blanco */
+        font-weight: bold;           /* Negrita para el texto */
+        border: none;                /* Sin bordes */
+        border-radius: 20px;         /* Bordes redondeados */
+        padding: 10px 20px;          /* Espaciado interno */
+        font-size: 25px;             /* Tamaño de fuente */
+        cursor: pointer;             /* Cambia el cursor al pasar el mouse */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra debajo del botón */
+        transition: transform 0.2s ease-in-out;    /* Transición para animación en hover */
+        }
+
+        #boton:hover {
+        transform: scale(1.05);      
+        }
+                #preload{
+                    height:88px;
+                    width:400px;
+                    background-color:#f6f2f2;
+                    font-family: Georgia, 'Times New Roman', Times, serif;
+                    font-size: 30px;
+                    position: absolute;
+                    left:414px;
+                    top: 300px;
+                }
+
+
+                 /* Contenedor principal */
+                .range-control {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+
+                /* Estilo general para los botones */
+                .range-control button {
+                    background-color: #e7ebee; /* Color azul */
+                    color: rgb(4, 4, 4); /* Texto blanco */
+                    border: none; /* Sin bordes */
+                    border-radius: 50%; /* Forma redonda */
+                    width: 40px; /* Ancho fijo */
+                    height: 40px; /* Alto fijo */
+                    font-size: 20px; /* Tamaño del texto */
+                    font-weight: bold; /* Negrita */
+                    cursor: pointer; /* Cambiar el cursor a "mano" */
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+                    display: flex; /* Centrar el contenido */
+                    align-items: center; /* Centrado vertical */
+                    justify-content: center; /* Centrado horizontal */
+                    transition: background-color 0.3s, transform 0.2s; /* Transiciones suaves */
+                    opacity: 0.1;
+                }
+
+                  /* Efecto activo (al presionar) */
+                    .range-control button:active {
+                        color: rgb(232, 155, 73);
+                        opacity: 0.5;
+                        transform: scale(0.9); /* Reducir tamaño */
+                    }
+                
+
+/* Estilos base para los botones de decremento */
+#decValue1,
+#decValue2,
+#decValue3,
+#decValue4,
+#decValue5,
+#decValue6,
+#decValue7,
+#decValue8,
+#decValue9 {
+  position: absolute;
+  left: 505px;
+}
+
+/* Estilos base para los botones de incremento */
+#incValue1,
+#incValue2,
+#incValue3,
+#incValue4,
+#incValue5,
+#incValue6,
+#incValue7,
+#incValue8,
+#incValue9 {
+  position: absolute;
+  left: 905px;
+}
+
+/* Espaciado entre botones (55px de separación) */
+#decValue1 {
+  top: 63px;
+}
+
+#incValue1 {
+  top: 63px;
+}
+
+#decValue2 {
+  top: calc(21px + 57px * 2);
+}
+
+#incValue2 {
+  top: calc(21px + 57px * 2);
+}
+
+#decValue3 {
+  top: calc(25px + 62px * 3);
+}
+
+#incValue3 {
+  top: calc(25px + 62px * 3);
+}
+
+#decValue4 {
+  top: calc(34px + 63px * 4);
+}
+
+#incValue4 {
+  top: calc(34px + 63px * 4);
+}
+
+#decValue5 {
+  top: calc(48px + 63px * 5);
+}
+
+#incValue5 {
+  top: calc(48px + 63px * 5);
+}
+
+#decValue6 {
+  top: calc(59px + 63px * 6);
+}
+
+#incValue6 {
+  top: calc(59px + 63px * 6);
+}
+
+#decValue7 {
+  top: calc(42px + 57px * 6);
+}
+
+#incValue7 {
+  top: calc(42px + 57px * 6);
+}
+
+#decValue8 {
+  top: calc(42px + 57px * 7);
+}
+
+#incValue8 {
+  top: calc(42px + 57px * 7);
+}
+
+#decValue9 {
+  top: calc(42px + 57px * 8);
+}
+
+#incValue9 {
+  top: calc(42px + 57px * 8);
+}
+        
+
+
+	</style>
+
+
+
+</head>
+<body id="cuerpo"><!--Config FireBase2 *******************************************************************************--><script type="module">
+
+            // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+                    const firebaseConfig = {
+                    apiKey: "AIzaSyA7_9boQaJQ-IUBhDbL1DQ4zNB0UgweM2g",
+                    authDomain: "tr2025-7f86e.firebaseapp.com",
+                    databaseURL: "https://tr2025-7f86e-default-rtdb.firebaseio.com",
+                    projectId: "tr2025-7f86e",
+                    storageBucket: "tr2025-7f86e.firebasestorage.app",
+                    messagingSenderId: "1019841114004",
+                    appId: "1:1019841114004:web:9d569c0600919949d4a981"
+                    };
+
+
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        
+        import {getDatabase,ref,set,child,update,remove,get,onValue} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+        
+        
+        
+        const db=getDatabase();
+        
+
+            var categoriaDisp="-";
+            var texto = obtenerParametro('texto');
+            var imagen = document.getElementById('image1');
+            var n1=document.getElementById('num1');
+            var n2=document.getElementById('num2');
+            var n3=document.getElementById('num3');
+            var n4=document.getElementById('num4');
+            var n5=document.getElementById('num5');
+            var n6=document.getElementById('num6');
+            //var n7=document.getElementById('num7');
+            //var n8=document.getElementById('num8');
+            //var n9=document.getElementById('num9');
+            //var n10=document.getElementById('num10');
+            var nJuez=document.getElementById('nJuez');
+            var notasId=document.getElementById('notas');
+            var nn1=document.getElementById('barra1');
+            var nn2=document.getElementById('barra2');
+            var nn3=document.getElementById('barra3');
+            var nn4=document.getElementById('barra4');
+            var nn5=document.getElementById('barra5');
+            var nn6=document.getElementById('barra6');
+            //var nn7=document.getElementById('originalidad');
+            //var nn8=document.getElementById('proyeccion');
+            //var nn9=document.getElementById('presentacion');
+            //var nn10=document.getElementById('controlSincCo');
+            var ncal=document.getElementById('calificacionDisplay');
+            var categoriaDisp=document.getElementById('variableDisplay1').innerText;
+            var competidorDisp=document.getElementById('variableDisplay2').innerText;
+            categoriaDisp="1 TEAM TEEN SHOW STAR"
+    
+            nJuez.value=texto;
+            imagen.src="images/"+texto+".png"; 
+            imagen.onerror = () => { imagen.src = "images/noperfil.png"; }; 
+            
+
+            function InsertData(){    var contenedor = document.getElementById('contenedor_carga');
+                        contenedor.style.visibility = 'visible';
+
+                        var cal = calcularCalificaciones();
+                        var calificacion = cal.toString();
+
+                        if (nn1.innerHTML == "" || nn2.innerHTML == "" || nn3.innerHTML == "" || nn4.innerHTML == "" || nn5.innerHTML == "" || nJuez.value == "") {
+                            alert("LLENA TODOS LOS CAMPOS, CALIFICACIONES NO GUARDADAS");
+                            contenedor.style.visibility = 'hidden';
+                            return;
+                        }
+
+                        if (nn1.innerHTML < 50 || nn1.innerHTML > 100 ||
+                            nn2.innerHTML < 50 || nn2.innerHTML > 100 ||
+                            nn3.innerHTML < 50 || nn3.innerHTML > 100 ||
+                            nn4.innerHTML < 50 || nn4.innerHTML > 100 ||
+                            nn5.innerHTML < 50 || nn5.innerHTML > 100) {
+                            alert("La calificación debe estar entre 50 y 100");
+                            contenedor.style.visibility = 'hidden';
+                            return;
+                        }
+
+                        // Obtener dia y variables desde Firebase
+                        const diaRef = ref(db, 'adminMinutoAMinuto/dia');
+                        const varRef = ref(db, 'miVariable');
+
+                        get(diaRef).then((snapDia) => {
+                            const dia = snapDia.val();
+                            if (!dia) throw new Error("Día no definido");
+
+                            return get(varRef).then((snapVar) => {
+                                const datos = snapVar.val();
+                                if (!datos || !datos.nCategoria || !datos.nCompetidor) {
+                                    throw new Error("miVariable no contiene nCategoria o nCompetidor");
+                                }
+
+                                const categoria = datos.nCategoria;
+                                const competidor = datos.nCompetidor;
+                                const juez = nJuez.value;
+
+                                const path = `calificaciones/${dia}/${categoria}/${competidor}/${juez}`;
+
+                                return set(ref(db, path), {
+                                    a_juez: juez,
+                                    b_Tiempo: nn1.innerHTML,
+                                    c_TecnicaGenero: nn2.innerHTML,
+                                    d_Coreografia: nn3.innerHTML,
+                                    e_ProyEsc: nn4.innerHTML,
+                                    f_PresVisual: nn5.innerHTML,
+                                    g_Dificultad: nn6.innerHTML,
+                                    l_calificacion: calificacion
+                                });
+                            });
+                        }).then(() => {
+                            contenedor.style.visibility = 'hidden';
+                            showModal();
+                        }).catch((error) => {
+                            contenedor.style.visibility = 'hidden';
+                            alert("Error al guardar calificaciones: " + error.message);
+                        });   
+                                    
+                                };
+
+    //--------------calculo calificacion----------------
+    function calcularCalificaciones(){
+        var cal=(Number.parseFloat(nn1.innerHTML)*0.25
+                +Number.parseFloat(nn2.innerHTML)*0.2
+                +Number.parseFloat(nn3.innerHTML)*0.15
+                +Number.parseFloat(nn4.innerHTML)*0.15
+                +Number.parseFloat(nn5.innerHTML)*0.10
+                +Number.parseFloat(nn6.innerHTML)*0.15).toFixed(2);
+        ncal.innerHTML=cal;
+        return cal;
+
+    }
+    //--------------calculo calificacion----------------
+
+
+
+
+    function obtenerParametro(parametro) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(parametro);
+
+    }
+
+    
+    boton.addEventListener('click',InsertData);
+            
+    //Eventos Barras
+
+    
+    n1.addEventListener('mousemove',function(e){
+        nn1.innerHTML=n1.value;   
+        calcularCalificaciones();
+	});
+
+    n2.addEventListener('mousemove',function(e){
+        nn2.innerHTML=n2.value;  
+        calcularCalificaciones();
+	});
+         
+    n3.addEventListener('mousemove',function(e){
+        nn3.innerHTML=n3.value; 
+        calcularCalificaciones();
+	});
+
+    n4.addEventListener('mousemove',function(e){
+        nn4.innerHTML=n4.value;
+        calcularCalificaciones();   
+	});
+
+    n5.addEventListener('mousemove',function(e){
+        nn5.innerHTML=n5.value;
+        calcularCalificaciones();   
+	});
+    n6.addEventListener('mousemove',function(e){
+        nn6.innerHTML=n6.value; 
+        calcularCalificaciones();  
+	});
+/*
+    n7.addEventListener('mousemove',function(e){
+        nn7.innerHTML=n7.value; 
+        calcularCalificaciones();  
+	});
+
+    n8.addEventListener('mousemove',function(e){
+        nn8.innerHTML=n8.value; 
+        calcularCalificaciones();  
+	});
+
+    n9.addEventListener('mousemove',function(e){
+        nn9.innerHTML=n9.value; 
+        calcularCalificaciones();  
+	});
+
+    n10.addEventListener('mousemove',function(e){
+        nn10.innerHTML=n10.value; 
+        calcularCalificaciones();  
+	});
+*/
+    n1.addEventListener('touchmove',function(e){
+        nn1.innerHTML=n1.value; 
+        calcularCalificaciones();  
+	});
+
+    n2.addEventListener('touchmove',function(e){
+        nn2.innerHTML=n2.value;
+        calcularCalificaciones();  
+	});
+
+    n3.addEventListener('touchmove',function(e){
+        nn3.innerHTML=n3.value;
+        calcularCalificaciones();
+	});
+
+    n4.addEventListener('touchmove',function(e){
+        nn4.innerHTML=n4.value;
+        calcularCalificaciones();  
+	});
+
+    n5.addEventListener('touchmove',function(e){
+        nn5.innerHTML=n5.value;
+        calcularCalificaciones();  
+	});
+
+    n6.addEventListener('touchmove',function(e){
+        nn6.innerHTML=n6.value;  
+        calcularCalificaciones();
+	});
+/*
+    n7.addEventListener('touchmove',function(e){
+        nn7.innerHTML=n7.value;  
+        calcularCalificaciones();
+	});
+
+    n8.addEventListener('touchmove',function(e){
+        nn8.innerHTML=n8.value;  
+        calcularCalificaciones();
+	});
+
+    n9.addEventListener('touchmove',function(e){
+        nn9.innerHTML=n9.value;  
+        calcularCalificaciones();
+	});
+
+    n10.addEventListener('touchmove',function(e){
+        nn10.innerHTML=n10.value;  
+        calcularCalificaciones();
+	});
+*/
+    n1.addEventListener('click',function(e){
+        nn1.innerHTML=n1.value;
+        calcularCalificaciones();  
+	});
+
+    n2.addEventListener('click',function(e){
+        nn2.innerHTML=n2.value;
+        calcularCalificaciones();
+	});
+
+    n3.addEventListener('click',function(e){
+        nn3.innerHTML=n3.value;
+        calcularCalificaciones();   
+	});
+
+    n4.addEventListener('click',function(e){
+        nn4.innerHTML=n4.value;
+        calcularCalificaciones();
+        
+	});
+    n5.addEventListener('click',function(e){
+        nn5.innerHTML=n5.value; 
+        calcularCalificaciones();
+	});
+
+    n6.addEventListener('click',function(e){
+        nn6.innerHTML=n6.value;
+        calcularCalificaciones(); 
+	});
+/*
+    n7.addEventListener('click',function(e){
+        nn7.innerHTML=n7.value;
+        calcularCalificaciones(); 
+	});
+
+    n8.addEventListener('click',function(e){
+        nn8.innerHTML=n8.value;
+        calcularCalificaciones(); 
+	});
+
+    n9.addEventListener('click',function(e){
+        nn9.innerHTML=n9.value;
+        calcularCalificaciones(); 
+	});
+
+    n10.addEventListener('click',function(e){
+        nn10.innerHTML=n10.value;
+        calcularCalificaciones(); 
+	});
+*/
+    n1.addEventListener('touchenter',function(e){
+        nn1.innerHTML=n1.value; 
+        calcularCalificaciones(); 
+	});
+
+    n2.addEventListener('touchenter',function(e){
+        nn2.innerHTML=n2.value;
+        calcularCalificaciones();
+	});
+
+    n3.addEventListener('touchenter',function(e){
+        nn3.innerHTML=n3.value; 
+        calcularCalificaciones();  
+	});
+
+    n4.addEventListener('touchenter',function(e){
+        nn4.innerHTML=n4.value;
+        calcularCalificaciones();
+        
+	});
+    n5.addEventListener('touchenter',function(e){
+        nn5.innerHTML=n5.value;
+        calcularCalificaciones(); 
+	});
+
+    n6.addEventListener('touchenter',function(e){
+        nn6.innerHTML=n6.value; 
+        calcularCalificaciones();
+	});
+/*
+    n7.addEventListener('touchenter',function(e){
+        nn7.innerHTML=n7.value; 
+        calcularCalificaciones();
+	});
+
+    n8.addEventListener('touchenter',function(e){
+        nn8.innerHTML=n8.value; 
+        calcularCalificaciones();
+	});
+
+    n9.addEventListener('touchenter',function(e){
+        nn9.innerHTML=n9.value; 
+        calcularCalificaciones();
+	});
+
+    n10.addEventListener('touchenter',function(e){
+        nn10.innerHTML=n10.value; 
+        calcularCalificaciones();
+	});
+*/
+    n1.addEventListener('change',function(e){
+        nn1.innerHTML=n1.value; 
+        calcularCalificaciones();
+        
+    });
+
+    n2.addEventListener('change',function(e){
+        nn2.innerHTML=n2.value; 
+        calcularCalificaciones();
+       
+    });
+
+    n3.addEventListener('change',function(e){
+        nn3.innerHTML=n3.value;
+        calcularCalificaciones(); 
+        
+    });
+
+    n4.addEventListener('change',function(e){
+        nn4.innerHTML=n4.value;
+        calcularCalificaciones(); 
+        
+    });
+
+    n5.addEventListener('change',function(e){
+        nn5.innerHTML=n5.value; 
+        calcularCalificaciones();
+        
+    });
+
+    n6.addEventListener('change',function(e){
+        nn6.innerHTML=n6.value; 
+        calcularCalificaciones();
+        
+    });
+/*
+    n7.addEventListener('change',function(e){
+        nn7.innerHTML=n7.value; 
+        calcularCalificaciones();
+        
+    });
+
+    n8.addEventListener('change',function(e){
+        nn8.innerHTML=n8.value; 
+        calcularCalificaciones();
+        
+    });
+
+    n9.addEventListener('change',function(e){
+        nn9.innerHTML=n9.value; 
+        calcularCalificaciones();
+        
+    });
+
+
+    n10.addEventListener('change',function(e){
+        nn10.innerHTML=n10.value; 
+        calcularCalificaciones();
+        
+    });
+*/
+
+
+// Escuchar cambios
+const variableRef = ref(db, 'miVariable');
+onValue(variableRef, (snapshot) => {
+  const valor = snapshot.val();
+  var arreglo=[];
+  document.getElementById('variableDisplay1').innerText = `Categoria: ${valor.nCategoria}`;
+  document.getElementById('variableDisplay2').innerText = `Competidor: ${valor.nCompetidor}`;
+  categoriaDisp=valor.nCategoria;
+  console.log(categoriaDisp);
+  console.log('AAAAAAAAAAAA');
+  obtenerLugares().then(lugares => {
+    console.log("Array de lugares:", lugares);
+    cambios3(lugares);
+});
+
+ 
+});
+
+const variableRef1 = ref(db, 'calificacionesSabado');
+onValue(variableRef1, (snapshot) => {
+  const valor = snapshot.val();
+  //var arreglo=[];
+  //document.getElementById('variableDisplay1').innerText = `Categoria: ${valor.nCategoria}`;
+  //document.getElementById('variableDisplay2').innerText = `Competidor: ${valor.nCompetidor}`;
+  //categoriaDisp=valor.nCategoria;
+  //console.log(categoriaDisp);
+  console.log('AAAAAAAAAAAA');
+  obtenerLugares().then(lugares => {
+    console.log("Array de lugares:", lugares);
+    cambios3(lugares);
+});
+
+ 
+});
+
+
+
+////////---------------------------
+async function obtenerLugares() {
+    const dbRef = ref(db);
+    let lugares = [];
+
+    try {
+        const snapshot = await get(child(dbRef, 'calificacionesSabado/' + categoriaDisp));
+        
+        snapshot.forEach(childSnapshot => {
+            const nombreHijo = childSnapshot.key;
+            lugares.push(nombreHijo);
+        });
+
+        return lugares; // Devuelve `lugares` después de que se ha completado
+    } catch (error) {
+        console.error("Error obteniendo los lugares:", error);
+        return []; // Devuelve un arreglo vacío en caso de error
+    }
+}
+
+///////----------------------------
+
+
+function cambios3(lugares){
+
+    const dbRef = ref(db);
+    console.log("JAJAJAJAAJAJAJAJAJ");
+    console.log(lugares[1]);
+    console.log(categoriaDisp);
+    console.log(nJuez.value);
+    document.getElementById('lugaresDisplay').innerText="";
+    for(let i=1;i<lugares.length;i++){
+        get(child(dbRef, 'calificacionesSabado/'+categoriaDisp+'/'+lugares[i]+'/'+nJuez.value+'/')).then((snapshot) => {
+                                        var misCalificaciones=[];
+                                        snapshot.forEach(childSnapshot =>{
+                
+                                                misCalificaciones.push(childSnapshot.val());
+                                            
+                                                
+                                        });
+                                        console.log("GGGGGGGGGGGGGGGGG");
+                                        console.log(lugares[i]+' : '+misCalificaciones[9]);   // es l_calificaciones esta en la pos 9 del arreglo
+                                        if(misCalificaciones[9]!=undefined)
+                                        document.getElementById('lugaresDisplay').innerText += `${misCalificaciones[9]}`+` - ${lugares[i]}`+"\n";
+                                    
+                                    });
+
+    }
+            
+
+}
+
+                //----- ventana aceptar
+
+                // Función para mostrar el modal
+                function showModal() {
+                document.getElementById("customModal").style.display = "block";
+                document.getElementById("modalOverlay").style.display = "block";
+                                                    n1.value=50;n2.value=50;n3.value=50;
+                                                    n4.value=50;n5.value=50;n6.value=50;
+                                                    //n7.value=50;n8.value=50;
+                                                    //n10.value=50;
+                                                    nn1.innerHTML=50;nn2.innerHTML=50;nn3.innerHTML=50;
+                                                    nn4.innerHTML=50;nn5.innerHTML=50;nn6.innerHTML=50;
+                                                    //nn7.innerHTML=50;nn8.innerHTML=50;
+                                                    calcularCalificaciones();
+            }
+
+            // Función para cerrar el modal
+            btnModal.addEventListener('click',closeModal);
+            function closeModal() {
+                document.getElementById("customModal").style.display = "none";
+                document.getElementById("modalOverlay").style.display = "none";
+            }
+
+                //----- ventana aceptar
+
+    //-------botones incrementar- decrementar
+    decValue1.addEventListener('click',decreaseValue1);
+      // Función para disminuir el valor
+            function decreaseValue1() {
+                const min = Number(n1.min); // Convertir a número
+                const step = Number(n1.step);
+                const currentValue = Number(n1.value);
+
+                if (currentValue - step >= min) {
+                n1.value = currentValue - step;
+                barra1.textContent = n1.value;
+                calcularCalificaciones();
+               
+                }
+            }
+    incValue1.addEventListener('click',increaseValue1);
+              // Función para aumentar el valor
+            function increaseValue1() {
+                const max = Number(n1.max); // Convertir a número
+                const step = Number(n1.step);
+                const currentValue = Number(n1.value);
+
+                if (currentValue + step <= max) {
+                n1.value = currentValue + step;
+                barra1.textContent = n1.value;
+                calcularCalificaciones();
+                
+                }
+            }
+
+
+
+    decValue2.addEventListener('click',decreaseValue2);
+      // Función para disminuir el valor
+            function decreaseValue2() {
+                const min = Number(n2.min); // Convertir a número
+                const step = Number(n2.step);
+                const currentValue = Number(n2.value);
+
+                if (currentValue - step >= min) {
+                n2.value = currentValue - step;
+                barra2.textContent = n2.value;
+                calcularCalificaciones();
+               
+                }
+            }
+    incValue2.addEventListener('click',increaseValue2);
+              // Función para aumentar el valor
+            function increaseValue2() {
+                const max = Number(n2.max); // Convertir a número
+                const step = Number(n2.step);
+                const currentValue = Number(n2.value);
+
+                if (currentValue + step <= max) {
+                n2.value = currentValue + step;
+                barra2.textContent = n2.value;
+                calcularCalificaciones();
+                
+                }
+            }
+
+            decValue3.addEventListener('click',decreaseValue3);
+      // Función para disminuir el valor
+            function decreaseValue3() {
+                const min = Number(n3.min); // Convertir a número
+                const step = Number(n3.step);
+                const currentValue = Number(n3.value);
+
+                if (currentValue - step >= min) {
+                n3.value = currentValue - step;
+                barra3.textContent = n3.value;
+                calcularCalificaciones();
+               
+                }
+            }
+    incValue3.addEventListener('click',increaseValue3);
+              // Función para aumentar el valor
+            function increaseValue3() {
+                const max = Number(n3.max); // Convertir a número
+                const step = Number(n3.step);
+                const currentValue = Number(n3.value);
+
+                if (currentValue + step <= max) {
+                n3.value = currentValue + step;
+                barra3.textContent = n3.value;
+                calcularCalificaciones();
+                
+                }
+            }
+
+
+    
+  decValue4.addEventListener('click',decreaseValue4);
+      // Función para disminuir el valor
+            function decreaseValue4() {
+                const min = Number(n4.min); // Convertir a número
+                const step = Number(n4.step);
+                const currentValue = Number(n4.value);
+
+                if (currentValue - step >= min) {
+                n4.value = currentValue - step;
+                barra4.textContent = n4.value;
+                calcularCalificaciones();
+               
+                }
+            }
+    incValue4.addEventListener('click',increaseValue4);
+              // Función para aumentar el valor
+            function increaseValue4() {
+                const max = Number(n4.max); // Convertir a número
+                const step = Number(n4.step);
+                const currentValue = Number(n4.value);
+
+                if (currentValue + step <= max) {
+                n4.value = currentValue + step;
+                barra4.textContent = n4.value;
+                calcularCalificaciones();
+                
+                }
+            }
+
+
+            decValue5.addEventListener('click',decreaseValue5);
+      // Función para disminuir el valor
+            function decreaseValue5() {
+                const min = Number(n5.min); // Convertir a número
+                const step = Number(n5.step);
+                const currentValue = Number(n5.value);
+
+                if (currentValue - step >= min) {
+                n5.value = currentValue - step;
+                barra5.textContent = n5.value;
+                calcularCalificaciones();
+               
+                }
+            }
+    incValue5.addEventListener('click',increaseValue5);
+              // Función para aumentar el valor
+            function increaseValue5() {
+                const max = Number(n5.max); // Convertir a número
+                const step = Number(n5.step);
+                const currentValue = Number(n5.value);
+
+                if (currentValue + step <= max) {
+                n5.value = currentValue + step;
+                barra5.textContent = n5.value;
+                calcularCalificaciones();
+                
+                }
+            }
+
+            decValue6.addEventListener('click',decreaseValue6);
+      // Función para disminuir el valor
+            function decreaseValue6() {
+                const min = Number(n6.min); // Convertir a número
+                const step = Number(n6.step);
+                const currentValue = Number(n6.value);
+
+                if (currentValue - step >= min) {
+                n6.value = currentValue - step;
+                barra6.textContent = n6.value;
+                calcularCalificaciones();
+               
+                }
+            }
+    incValue6.addEventListener('click',increaseValue6);
+              // Función para aumentar el valor
+            function increaseValue6() {
+                const max = Number(n6.max); // Convertir a número
+                const step = Number(n6.step);
+                const currentValue = Number(n6.value);
+
+                if (currentValue + step <= max) {
+                n6.value = currentValue + step;
+                barra6.textContent = n6.value;
+                calcularCalificaciones();
+                
+                }
+            }
+
+/*    
+  decValue7.addEventListener('click',decreaseValue7);
+      // Función para disminuir el valor
+            function decreaseValue7() {
+                const min = Number(n7.min); // Convertir a número
+                const step = Number(n7.step);
+                const currentValue = Number(n7.value);
+
+                if (currentValue - step >= min) {
+                n7.value = currentValue - step;
+                originalidad.textContent = n7.value;
+                calcularCalificaciones();
+               
+                }
+            }
+    incValue7.addEventListener('click',increaseValue7);
+              // Función para aumentar el valor
+            function increaseValue7() {
+                const max = Number(n7.max); // Convertir a número
+                const step = Number(n7.step);
+                const currentValue = Number(n7.value);
+
+                if (currentValue + step <= max) {
+                n7.value = currentValue + step;
+                originalidad.textContent = n7.value;
+                calcularCalificaciones();
+                
+                }
+            }
+
+            decValue8.addEventListener('click',decreaseValue8);
+      // Función para disminuir el valor
+            function decreaseValue8() {
+                const min = Number(n8.min); // Convertir a número
+                const step = Number(n8.step);
+                const currentValue = Number(n8.value);
+
+                if (currentValue - step >= min) {
+                n8.value = currentValue - step;
+                proyeccion.textContent = n8.value;
+                calcularCalificaciones();
+               
+                }
+            }
+    incValue8.addEventListener('click',increaseValue8);
+              // Función para aumentar el valor
+            function increaseValue8() {
+                const max = Number(n8.max); // Convertir a número
+                const step = Number(n8.step);
+                const currentValue = Number(n8.value);
+
+                if (currentValue + step <= max) {
+                n8.value = currentValue + step;
+                proyeccion.textContent = n8.value;
+                calcularCalificaciones();
+                
+                }
+            }
+
+            decValue9.addEventListener('click',decreaseValue9);
+      // Función para disminuir el valor
+            function decreaseValue9() {
+                const min = Number(n9.min); // Convertir a número
+                const step = Number(n9.step);
+                const currentValue = Number(n9.value);
+
+                if (currentValue - step >= min) {
+                n9.value = currentValue - step;
+                presentacion.textContent = n9.value;
+                calcularCalificaciones();
+               
+                }
+            }
+    incValue9.addEventListener('click',increaseValue9);
+              // Función para aumentar el valor
+            function increaseValue9() {
+                const max = Number(n9.max); // Convertir a número
+                const step = Number(n9.step);
+                const currentValue = Number(n9.value);
+
+                if (currentValue + step <= max) {
+                n9.value = currentValue + step;
+                presentacion.textContent = n9.value;
+                calcularCalificaciones();
+                
+                }
+            }*/
+    //-------botones incrementar- decrementar
+
+          </script>
+<!--<p id="competenciaN">Dance Judge Pro</p>-->
+<img id="image1"  />
+<img id="image2" src="images/logo.png" />
+<fieldset><br />
+<!--<legend id="campo">Bachata Competition</legend>-->
+<br>
+<label id="campo">JUDGE</label><label id="campo1">PANEL</label>
+<div id="contenedor_carga">
+<div id="carga">&nbsp;</div>
+</div>
+<label id="txt1">Nombre Juez: </label> <input id="nJuez" readonly="true" type="text" value="Angie Olach" /><br />
+
+<br />
+<label id="txt2">[ 25% ] Tiempo  </label> <input id="num1" max="100" min="50" step="1" type="range" value="50" /> <span id="barra1">50</span><br />
+<br /><br />
+<br />
+
+<label id="txt3">[ 20% ] Técnica Género </label> <input id="num2" max="100" min="50" step="1" type="range" value="50" /> <span id="barra2">50</span><br />
+<br /><br />
+<br />
+<label id="txt4">[ 15% ] Coreografica/Musicalidad </label> <input id="num3" max="100" min="50" step="1" type="range" value="50" /> <span id="barra3">50</span><br />
+<br /><br />
+<br />
+<label id="txt5">[ 15% ] Proyección Escénica </label> <input id="num4" max="100" min="50" step="1" type="range" value="50" /> <span id="barra4">50</span><br />
+<br />
+<br /><br />
+<label id="txt6">[ 10% ] Presentación Visual/Vestuario </label> <input id="num5" max="100" min="50" step="1" type="range" value="50" /> <span id="barra5">50</span><br />
+<br />
+<br /><br />
+<label id="txt7">[ 15% ] Dificultad Sincronización</label> <input id="num6" max="100" min="50" step="1" type="range" value="50" /> <span id="barra6">50</span><br />
+<br />
+<br /><br />
+
+<!--<label id="txt8">[ 10% ] Prestacion Visual</label> <input id="num7" max="100" min="50" step="1" type="range" value="50" /> <span id="originalidad">50</span><br />
+<br />
+<br />
+
+<label id="txt9">[ 5% ] Cubania</label> <input id="num8" max="100" min="50" step="1" type="range" value="50" /> <span id="proyeccion">50</span><br />
+<br />
+<br />
+
+<label id="txt10">[ 10% ] Conexión</label> <input id="num9" max="100" min="50" step="1" type="range" value="50" /> <span id="presentacion">50</span><br />
+<br />
+<br />
+
+<label id="txt11">[ 10% ] Control / Sincronización / Conexión</label> <input id="num10" max="100" min="50" step="1" type="range" value="50" /> <span id="controlSincCo">50</span><br />
+<br />
+<br />-->
+<div class="contenedor">
+
+</div>
+
+
+<div class="range-control">
+<button id="decValue1">-</button> <button id="incValue1">+</button>
+<button id="decValue2">-</button> <button id="incValue2">+</button>
+<button id="decValue3">-</button> <button id="incValue3">+</button>
+<button id="decValue4">-</button> <button id="incValue4">+</button>
+<button id="decValue5">-</button> <button id="incValue5">+</button>
+<button id="decValue6">-</button> <button id="incValue6">+</button>
+<!--<button id="decValue7">-</button> <button id="incValue7">+</button>
+<button id="decValue8">-</button> <button id="incValue8">+</button>
+<button id="decValue9">-</button> <button id="incValue9">+</button>-->
+
+
+</div>
+
+
+<div id="variableDisplay1">Cargando...</div>
+<div id="variableDisplay2"></div>
+<div id="lugaresDisplay"></div>
+<div id="calificacionDisplay">50.00</div>
+<button id="boton" >Calificar</button><br />
+
+
+<!-- Estructura del Modal -->
+<div id="customModal" style="
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  z-index: 1000;
+  text-align: center;
+  width: 300px;
+">
+  <p>Calificar Siguiente</p>
+  <button id="btnModal" style="
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  ">Aceptar</button>
+</div>
+
+<!-- Fondo Oscuro -->
+<div id="modalOverlay" style="
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+"></div>
+
+</body>
+</html>

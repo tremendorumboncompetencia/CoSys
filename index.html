@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Modica:wght@600&display=swap" rel="stylesheet">
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    };
+  </script>
+  <title>Competition Software</title>
+  <style>
+    /* ... tus estilos sin cambios ... */
+    body {
+      background: linear-gradient(to bottom, #000809, #292931, #794190);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-family: 'Arial', sans-serif;
+    }
+    h1 {
+      font-size: 36px;
+      margin-top: 20px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    }
+    .competition,.software,.judge {
+      font-family: 'Modica', sans-serif;
+      font-weight: 600;
+      font-style: italic;
+    }
+    .competition { color: #20d2f1; }
+    .software { color: #794190; }
+    .judge { color: #ffffff; }
+    .carousel-container {
+      width: 100%;
+      max-width: 800px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      position: relative;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+    .carousel {
+      display: flex;
+      transition: transform 0.5s ease;
+      will-change: transform;
+    }
+    .image-container {
+      position: relative;
+      width: 300px;
+      height: 280px;
+      margin: 0 10px;
+      cursor: pointer;
+      overflow: hidden;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    .image-container:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.4);
+    }
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .overlay {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #ffffff;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 18px;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
+    .button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      padding: 12px;
+      cursor: pointer;
+      font-size: 24px;
+      z-index: 1;
+      border-radius: 50%;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+    .button:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+      color: #141414;
+      transform: scale(1.1);
+    }
+    .prev { left: 20px; }
+    .next { right: 20px; }
+    .search-container {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .search-container input {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+      margin-right: 10px;
+      width: 250px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+    .search-container input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  </style>
+</head>
+<body>
+
+<h1><span class="competition">DANCE</span><span class="judge">JUDGE</span><span class="software">PRO</span></h1>
+
+<div class="search-container">
+  <input type="text" id="searchInput" placeholder="Buscar imagen por nombre...">
+</div>
+
+<div class="carousel-container">
+  <button class="button prev" onclick="moveCarousel(-1)">&#10094;</button>
+  <div class="carousel" id="carousel"></div>
+  <button class="button next" onclick="moveCarousel(1)">&#10095;</button>
+</div>
+
+<!-- Módulo de Firebase + Lógica personalizada -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+  import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA7_9boQaJQ-IUBhDbL1DQ4zNB0UgweM2g",
+    authDomain: "tr2025-7f86e.firebaseapp.com",
+    databaseURL: "https://tr2025-7f86e-default-rtdb.firebaseio.com",
+    projectId: "tr2025-7f86e",
+    storageBucket: "tr2025-7f86e.firebasestorage.app",
+    messagingSenderId: "1019841114004",
+    appId: "1:1019841114004:web:9d569c0600919949d4a981"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  window.getRubricaURL = async function(texto) {
+    try {
+      const rubricaRef = ref(db, 'adminCompetencia/rubricaSel');
+      const snapshot = await get(rubricaRef);
+      if (snapshot.exists()) {
+        const rubrica = snapshot.val();
+        let url = '';
+        if (rubrica === 'rubricaSalsaBachata') {
+          url = 'rubricaSalsaBachata.html';
+        } else if (rubrica === 'rubricaRuedaCasino') {
+          url = 'rubricaRuedaCasino.html';
+        } else if (rubrica === 'rubricaShowStar') {
+          url = 'rubricaShowStar.html';
+        } else {
+          alert('Rúbrica no reconocida.');
+          return;
+        }
+        window.location.href = `${url}?texto=${encodeURIComponent(texto)}`;
+      } else {
+        alert('No se encontró la rúbrica seleccionada.');
+      }
+    } catch (error) {
+      console.error('Error leyendo rubricaSel:', error);
+      alert('Error al conectar con Firebase.');
+    }
+  };
+</script>
+
+<script>
+  const imageNames = [
+    "images/Gaby Equiz.png",
+    "images/Jorge Velasco.png",
+    "images/Gaby Lorenzana.png",
+    "images/Ediberto Persa.png",
+    "images/Jana Cervantes.png",
+    "images/Ernesto López.png",
+    "images/Víctor Bautista.png",
+    "images/Karen Rangel.png",
+    "images/Valdespino.png",
+    "images/Sergio.png",
+    "images/Maritza.png"
+  ];
+
+  const carousel = document.getElementById('carousel');
+  let currentIndex = 0;
+
+  imageNames.forEach((src, index) => {
+    const imgContainer = document.createElement('div');
+    imgContainer.classList.add('image-container');
+
+    const img = document.createElement('img');
+    img.src = src;
+    img.onerror = () => { img.src = "images/noperfil.png"; };
+    img.onclick = () => imageClicked(index);
+
+    const fileName = src.split('/').pop().split('.').slice(0, -1).join('.');
+    const overlay = document.createElement('div');
+    overlay.classList.add('overlay');
+    overlay.textContent = fileName;
+
+    imgContainer.appendChild(img);
+    imgContainer.appendChild(overlay);
+    carousel.appendChild(imgContainer);
+  });
+
+  const imageWidth = 300 + 20;
+
+  function moveCarousel(direction) {
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = imageNames.length - 1;
+    else if (currentIndex >= imageNames.length) currentIndex = 0;
+    updateCarousel();
+  }
+
+  function updateCarousel() {
+    carousel.style.transition = 'transform 0.5s ease';
+    carousel.style.transform = `translateX(${-currentIndex * imageWidth}px)`;
+  }
+
+  function imageClicked(index) {
+    const fotoSel = imageNames[index].split('/').pop().split('.').slice(0, -1).join('.');
+    getRubricaURL(fotoSel);
+  }
+
+  let startX = 0;
+  let endX = 0;
+  carousel.addEventListener('touchstart', (event) => {
+    startX = event.touches[0].clientX;
+  });
+  carousel.addEventListener('touchend', (event) => {
+    endX = event.changedTouches[0].clientX;
+    handleGesture();
+  });
+
+  function handleGesture() {
+    if (startX > endX + 50) moveCarousel(1);
+    else if (startX < endX - 50) moveCarousel(-1);
+  }
+
+  document.getElementById('searchInput').addEventListener('input', function () {
+    const query = this.value.toLowerCase();
+    const filteredImages = imageNames.filter(name => name.toLowerCase().includes(query));
+    const visibleImages = Array.from(carousel.children);
+
+    visibleImages.forEach((container, index) => {
+      const fileName = imageNames[index].split('/').pop().split('.').slice(0, -1).join('.').toLowerCase();
+      container.style.display = filteredImages.includes(imageNames[index]) ? 'block' : 'none';
+    });
+
+    if (filteredImages.length > 0) {
+      currentIndex = 0;
+      updateCarousel();
+    }
+  });
+
+  updateCarousel();
+</script>
+
+</body>
+</html>
