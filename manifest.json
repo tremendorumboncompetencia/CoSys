@@ -1,19 +1,19 @@
 {
-    "short_name": "SysCom",
+    "short_name": "CoSys",
     "name": "Competition System",
     "icons": [
       {
-        "src": "images/djp192.png",
+        "src": "/CoSys/images/djp192.png",
         "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "images/djp512.png",
+        "src": "/CoSys/images/djp512.png",
         "type": "image/png",
         "sizes": "512x512"
       }
     ],
-    "start_url": "./index.html",
+    "start_url": "/CoSys/index.html",
     "background_color": "#000000",
     "display": "standalone",
     "theme_color": "#ff0000"
